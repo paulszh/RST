@@ -19,7 +19,13 @@ public:
   virtual bool insert(const Data& item) {
 
     // TODO: Implement this function!
-
+    if(BST<Data>::empty()){
+        BST<Data>::root = new BSTNode<Data>(item);
+        BST<Data>::isize++;
+    }
+    else{
+        
+    }
     return true;
   }
 
