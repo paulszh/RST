@@ -15,10 +15,8 @@ public:
 
   /** Constructor.  Use the argument to initialize the current BSTNode
    *  in this BSTIterator.
-   */ // TODO
-  BSTIterator(BSTNode<Data>* curr) {
-    this->curr = curr;
-  }
+   */
+  BSTIterator(BSTNode<Data>* curr) : curr(curr) { }
 
   /** Dereference operator. */
   Data operator*() const {
@@ -40,17 +38,12 @@ public:
 
   /** Equality test operator. */ // TODO
   bool operator==(BSTIterator<Data> const & other) const {
-    if(this->curr == other.curr)
-      return true;
-    else return false;
+    return curr == other.curr;
   }
 
   /** Inequality test operator. */ // TODO
   bool operator!=(BSTIterator<Data> const & other) const {
-    if(this->curr != other.curr){
-      return true;
-    }
-    else return false;
+    return curr != other.curr;
   }
 
 };

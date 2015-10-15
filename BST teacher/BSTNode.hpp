@@ -2,6 +2,7 @@
 #define BSTNODE_HPP
 #include <iostream>
 #include <iomanip>
+#include <stdlib.h>
 
 template<typename Data>
 class BSTNode {
@@ -12,13 +13,13 @@ public:
   BSTNode<Data>* left;
   BSTNode<Data>* right;
   BSTNode<Data>* parent;
-  int priority;
   Data const data;   // the const Data in this node.
+  int priority;
 
   /** Constructor.  Initialize a BSTNode with the given Data item,
    *  no parent, and no children.
    */
-  BSTNode(const Data & d) : data(d) {
+  BSTNode(const Data & d) : data(d), priority(rand()){
     left = right = parent = 0;
   }
 
@@ -51,11 +52,11 @@ public:
       }
     }
 
-    return 0;    
+    return 0;
 
   }
 
-}; 
+};
 
 /** Overload operator<< to print a BSTNode's fields to an ostream. */
 template <typename Data>
