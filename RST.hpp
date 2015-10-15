@@ -16,13 +16,13 @@ public:
     *    return - true if the item was inserted. If the item was already contained in
     *       the tree then return false.
     */
-
     virtual bool insert(const Data& item) {
 
         // TODO: Implement this function!
         if (BST<Data>:: empty()) {
             BST<Data>::root = new BSTNode<Data>(item);
-            //cout << BST<Data>::root << endl;
+            BST<Data>::root->priority = rand();
+            //cout << BST<Data>::root->priority<< endl;
             return true;
         }
         else {
@@ -42,6 +42,7 @@ public:
                 }
             }
             BSTNode<Data>* newNode = new BSTNode<Data>(item);
+            newNode->priority = rand();
             if ( item < last->data ) {
                 last->left = newNode;
                 newNode->parent = last;
@@ -51,7 +52,7 @@ public:
                 newNode->parent = last;
             }
             //cout << newNode->priority << endl;
-            //bubbleUp(newNode);
+            bubbleUp(newNode);
             return true;
 
         }
@@ -74,8 +75,27 @@ private:
     *   in level, meaning 'par' will effectively become the right-child of 'child'.
     *
     */
-    void bubbleUp(){
-        return;
+    void bubbleUp(BSTNode<Data>* temp){
+        BSTNode<Data> *cur = temp->parent;
+        if(cur){
+            if(cur->priority > temp->priority){
+                return;
+            }
+            else{
+                if(cur->left == temp){// temp is the left child
+                    rotateRight(cur, temp);
+                    bubbleUp(temp);
+                }
+                else{
+                    rotateLeft(cur, temp);
+                    bubbleUp(temp);
+                }
+            }
+            return;
+        }
+        else{
+            return;
+        }
 
     }
     void rotateRight( BSTNode<Data>* par, BSTNode<Data>* child ) {
@@ -100,6 +120,7 @@ private:
             BST<Data>::root = child;           //then assign child to root
             BST<Data>::root->parent = 0;
         }
+        return;
         // TODO: Implement this function!
 
     }
@@ -142,6 +163,7 @@ private:
             BST<Data>::root->parent = 0;
         }
         // TODO: Implement this function!
+        return;
 
     }
 
@@ -156,7 +178,6 @@ public:
     bool BSTinsert(const Data& item) {
 
         return BST<Data>::insert(item);
-        //return BSTinsert(item);
 
     }
 

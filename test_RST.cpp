@@ -189,6 +189,7 @@ int test_RST_insert(int N) {
   if(compsperkey <= maxcompsperkey) cout << "OK. " << endl;
   else if (compsperkey <= maxcompsperkey * 2) cout << "could be better... max is " << maxcompsperkey << endl;
   else {
+    //cout << maxcompsperkey << endl;
     cout << "way too many!" << endl;
     return -1;
   }
