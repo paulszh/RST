@@ -2,21 +2,16 @@
 #include "countint.hpp"
 #include <vector>
 #include <set>
-#include <math.h>
+#include <cmath>
 
 using namespace std;
 
 int main(int argc, char* argv[]) {
     int N = 32768;
     int numRun = 5;
-    double comps = 0;
-    double totalcomps = 0;
-    double totalstd = 0;
-    double avgcomps = 0;
-    bool rst = false;
-    double stdev;
-    srand ( unsigned ( 149 ) );
-    int expo, val;   // the expo of the
+    //bool rst = true;
+    double stdev,difference,acpr,cpr,total,totalstd,avgstd;
+    int expo,val;   // the expo of the
     cout << "# Benchmarking average number of comparisons for successful find" << endl;
     cout << "# Data structure: ";
     cout << "# rst" << endl;
@@ -25,46 +20,43 @@ int main(int argc, char* argv[]) {
     cout << "# Averaging "<< numRun << " runs for each N" <<endl;
     cout << "#" << endl;
     cout << "# N 	 avgcomps 	 stdev" << endl;
-    RST<countint> r = RST<countint>();   //ceate a rst which contains countint
-    //BST<countint> b = BST<countint>();
-    std::vector<countint> v;             //
-    countint::clearcount();
-    v.clear();
-    for(expo = 1; exp2(expo)<= N; ++expo){
+    BST<countint> b = BST<countint>();
+    //print the case for number of nodes from 1 to N-1
+    std::vector<countint> v;
+    for(expo = 1; exp2(expo)<= N; expo++){
         val = exp2(expo)-1;
-        for(int i=0; i<val; ++i) {    //Add 0 to N to the vector
-            v.push_back(i);
+        v.clear();
+        //push j elements into the vector v
+        for(int j = 0; j<val; j++) {
+            v.push_back(j);
         }
-        std::random_shuffle ( v.begin(), v.end());
         std::vector<countint>::iterator vit = v.begin();
         std::vector<countint>::iterator ven = v.end();
-        for(int i = 0; i < numRun; i++){  //the outer loop runs for numRun times
-            if(rst){
-                for(vit = v.begin(); vit != ven; ++vit){
-                    r.insert(*vit);
-                }
-            }
-            else{
-                for(vit = v.begin(); vit != ven; ++vit){
-                    r.BSTinsert(*vit);
-                }
-            }
-            countint::clearcount();
+        //this loop will run numRun times according to user input
+        for(int i = 0; i < numRun; i++){
+            random_shuffle ( v.begin(), v.end());//disorder the elements in the v
+            //insert the elements to the rst tree
+            v.clear();
+            RST<countint> r = RST<countint>();   //ceate a rst which contains countint
             for(vit = v.begin(); vit != ven; ++vit) {
+                r.insert(*vit);
+            }
+            //clear the count value before search
+            countint::clearcount();
+            for(vit = v.begin(); vit != ven; ++vit){
                 r.find(*vit);
             }
-            comps = countint::getcount()/(double)val;
-            totalcomps = totalcomps + comps;
-            totalstd =  totalstd + pow(comps,2);
+            //finish the search
+            cpr = countint::getcount()/(double)val;
+            total = total + cpr;
+            totalstd += cpr * cpr;
         }
-
-        avgcomps = totalcomps/(double)numRun;  //the overall average comparison;
-        stdev = sqrt((totalstd/(double)numRun) - pow(avgcomps,2));
-        cout << val << "   "<< avgcomps <<"   " <<stdev <<endl;
-        totalcomps = 0;
+        acpr = total/(double)numRun;  // average comparison per run
+        avgstd = totalstd/(double)numRun;
+        stdev = sqrt(abs(avgstd-acpr * acpr));
+        cout << val << "   "<< acpr <<"   " <<stdev <<endl;
+        total = 0;
         totalstd = 0;
-        v.clear();
     }
-    cout << exp2(3) << endl;
 
 }
