@@ -28,11 +28,11 @@ int main(int argc, char* argv[]) {
     string rststr ("rst");
     string setstr ("set");
     string sortstr("sorted");
-    string shufflestr("shuffle");
+    string shufflestr("shuffled");
     string current = argv[1];
     string datatype = argv[2];
 
-    double stdev,acpr,cpr,total,totalstd,avgstd;
+    double stdev,acpr,cpr,total,totalstd,avgstd,difference;
     int expo, val;   // the expo of the
 
     cout << "# Benchmarking average number of comparisons for successful find" << endl;
@@ -52,14 +52,13 @@ int main(int argc, char* argv[]) {
             for(int i=0; i<val; ++i) {    //Add 0 to N to the vector
                 v.push_back(i);
             }
-            if(datatype.compare(shufflestr) == 0){
-                random_shuffle ( v.begin(), v.end());
-            }
             std::vector<countint>::iterator vit = v.begin();
             std::vector<countint>::iterator ven = v.end();
             for(int i = 0; i < numRun; i++){  //the outer loop runs for numRun times
-
                 BST<countint> b = BST<countint>();   //ceate a bst which contains countint
+                if(datatype.compare(shufflestr) == 0){
+                    random_shuffle ( v.begin(), v.end());
+                }
                 for(vit = v.begin(); vit != ven; ++vit){
                     b.insert(*vit);
                 }
@@ -68,21 +67,25 @@ int main(int argc, char* argv[]) {
                     b.find(*vit);
                 }
                 cpr = countint::getcount()/(double)val;
-                total = total + cpr;
+                total +=cpr;
                 totalstd += cpr * cpr;
             }
             acpr = total/(double)numRun;  // average comparison per run
+            //cout << "total " << total << endl;
+            //cout << "totalstd: " << totalstd << endl;
             avgstd = totalstd/(double)numRun;
-            stdev = sqrt(abs(avgstd-acpr * acpr));
+            difference = abs(avgstd-acpr * acpr);
+            stdev = sqrt(difference);
             cout << setw(7) << val << setw(10) << acpr << setw(15)<<stdev <<endl;
             total = 0;
             totalstd = 0;
+            //cout << "" << endl;
         }
     }
-    
     if(current.compare(rststr) == 0){
 
         std::vector<countint> v;
+
         for(expo = 1; exp2(expo)<= range; expo++){
             val = exp2(expo)-1;
             v.clear();
@@ -92,7 +95,6 @@ int main(int argc, char* argv[]) {
             if(datatype.compare(shufflestr) == 0){
                 random_shuffle ( v.begin(), v.end());
             }
-
             std::vector<countint>::iterator vit = v.begin();
             std::vector<countint>::iterator ven = v.end();
 
@@ -114,7 +116,8 @@ int main(int argc, char* argv[]) {
             }
             acpr = total/(double)numRun;  // average comparison per run
             avgstd = totalstd/(double)numRun;
-            stdev = sqrt(abs(avgstd-acpr * acpr));
+            difference = abs(avgstd-acpr * acpr);
+            stdev = sqrt(difference);
             cout << setw(7) << val << setw(10) << acpr << setw(15)<<stdev <<endl;
             total = 0;
             totalstd = 0;
@@ -126,7 +129,7 @@ int main(int argc, char* argv[]) {
     if(current.compare(setstr) == 0){
 
         std::vector<countint> v;             //
-        countint::clearcount();
+        //countint::clearcount();
 
         for(expo = 1; exp2(expo)<= range; expo++){
             val = exp2(expo)-1;
@@ -134,15 +137,15 @@ int main(int argc, char* argv[]) {
             for(int i=0; i<val; ++i) {    //Add 0 to N to the vector
                 v.push_back(i);
             }
-            if(datatype.compare(shufflestr) == 0){
-                random_shuffle ( v.begin(), v.end());
-            }
 
             std::vector<countint>::iterator vit = v.begin();
             std::vector<countint>::iterator ven = v.end();
 
             for(int i = 0; i < numRun; i++){  //the outer loop runs for numRun times
                 set<countint> s = set<countint>();   //ceate a rst which contains countint
+                if(datatype.compare(shufflestr) == 0){
+                    random_shuffle ( v.begin(), v.end());
+                }
                 for(vit = v.begin(); vit != ven; ++vit){
                     s.insert(*vit);
                 }
@@ -156,7 +159,8 @@ int main(int argc, char* argv[]) {
             }
             acpr = total/(double)numRun;  // average comparison per run
             avgstd = totalstd/(double)numRun;
-            stdev = sqrt(abs(avgstd-acpr * acpr));
+            difference = abs(avgstd-acpr * acpr);
+            stdev = sqrt(difference);
             cout << setw(7) << val << setw(10) << acpr << setw(15)<<stdev <<endl;
             total = 0;
             totalstd = 0;
