@@ -114,6 +114,7 @@ private:
         if(par->left){
             par->left->parent = par;
         }
+
         child->right = par;
         par->parent = child;
         if(BST<Data>::root == par){ //the case when par is a root
