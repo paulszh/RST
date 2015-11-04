@@ -16,18 +16,18 @@ public:
   Data const data;   // the const Data in this node.
 
   /** Constructor.  Initialize a BSTNode with the given Data item,
-   *  no parent, and no children.
-   */
+  *  no parent, and no children.
+  */
   BSTNode(const Data & d) : data(d) {
     left = right = parent = 0;
   }
 
   /** Return the successor of this BSTNode in a BST, or 0 if none.
-   ** PRECONDITION: this BSTNode is a node in a BST.
-   ** POSTCONDITION:  the BST is unchanged.
-   ** RETURNS: the BSTNode that is the successor of this BSTNode,
-   ** or 0 if there is none.
-   */ // TODO
+  ** PRECONDITION: this BSTNode is a node in a BST.
+  ** POSTCONDITION:  the BST is unchanged.
+  ** RETURNS: the BSTNode that is the successor of this BSTNode,
+  ** or 0 if there is none.
+  */ // TODO
   BSTNode<Data>* successor() {
     // Algorithm: Go right, and then left as far as possible.  If there
     // is no right, then go up.  If the node is a left child, that's it.
@@ -37,25 +37,26 @@ public:
     if ( current->right != 0 ) {
       current = current->right;
       while (current->left != 0) {
-	current = current -> left;
+        current = current -> left;
       }
       return current;
     }
+    
     while ( current->parent != 0 ) {
       BSTNode<Data>* par = current->parent;
       if ( par->left == current ) {
-	return par;
+        return par;
       }
       else {
-	current = par;
+        current = par;
       }
     }
 
-    return 0;    
+    return 0;
 
   }
 
-}; 
+};
 
 /** Overload operator<< to print a BSTNode's fields to an ostream. */
 template <typename Data>

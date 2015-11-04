@@ -76,16 +76,14 @@ int main(int argc, char* argv[]) {
             avgstd = totalstd/(double)numRun;
             difference = abs(avgstd-acpr * acpr);
             stdev = sqrt(difference);
-            cout << setw(7) << val << setw(10) << acpr << setw(15)<<stdev <<endl;
+            cout << setw(1) << val << setw(10) << acpr << setw(13)<<stdev <<endl;
             total = 0;
             totalstd = 0;
             //cout << "" << endl;
         }
     }
     if(current.compare(rststr) == 0){
-
         std::vector<countint> v;
-
         for(expo = 1; exp2(expo)<= range; expo++){
             val = exp2(expo)-1;
             v.clear();
@@ -118,7 +116,7 @@ int main(int argc, char* argv[]) {
             avgstd = totalstd/(double)numRun;
             difference = abs(avgstd-acpr * acpr);
             stdev = sqrt(difference);
-            cout << setw(7) << val << setw(10) << acpr << setw(15)<<stdev <<endl;
+            cout << setw(1) << val << setw(10) << acpr << setw(13)<<stdev <<endl;
             total = 0;
             totalstd = 0;
         }
@@ -127,10 +125,8 @@ int main(int argc, char* argv[]) {
 
 
     if(current.compare(setstr) == 0){
-
         std::vector<countint> v;             //
         //countint::clearcount();
-
         for(expo = 1; exp2(expo)<= range; expo++){
             val = exp2(expo)-1;
             v.clear();
@@ -161,7 +157,7 @@ int main(int argc, char* argv[]) {
             avgstd = totalstd/(double)numRun;
             difference = abs(avgstd-acpr * acpr);
             stdev = sqrt(difference);
-            cout << setw(7) << val << setw(10) << acpr << setw(15)<<stdev <<endl;
+            cout << setw(1) << val << setw(10) << acpr << setw(13)<<stdev <<endl;
             total = 0;
             totalstd = 0;
         }
